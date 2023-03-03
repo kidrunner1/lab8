@@ -45,6 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
   void initState() {
     super.initState();
     Provider.of<TransactionProvider>(context, listen: false).initData();
@@ -56,13 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
         length: 2,
         child: Scaffold(
           backgroundColor: Colors.green,
-          body: TabBarView(children: [
-            FormScreen(),
-            const HomeScreen(),
-          ]),
+          body: TabBarView(children: [HomeScreen(), FormScreen()]),
           bottomNavigationBar: const TabBar(tabs: [
             Tab(
               icon: Icon(Icons.list),
+              text: ('รายการ'),
+            ),
+            Tab(
+              icon: Icon(Icons.add),
+              text: 'เพิ่มข้อมูล',
             )
           ]),
         ));

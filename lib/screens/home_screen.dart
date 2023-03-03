@@ -21,7 +21,54 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-      title: Text('แอปรายจ่าย'),
-    ));
+          title: const Text("แอพรายจ่าย"),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return FormScreen();
+                  }));
+                },
+                icon: const Icon(Icons.add)),
+            IconButton(
+                onPressed: () {
+                  SystemNavigator.pop();
+                },
+                icon: const Icon(Icons.exit_to_app, color: Colors.red)),
+          ],
+        ),
+        body: Consumer(builder: (context, TransactionProvider provider, child) {
+          var count = provider.transactions.length; //นับจำนวนข้อมูล
+          if (count <= 0) {
+            return const Center(
+              child: Text(
+                "ไม่พบข้อมูล",
+                style: TextStyle(fontSize: 35),
+              ),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: provider.transactions.length,
+                itemBuilder: (context, int index) {
+                  Transactions data = provider.transactions[index];
+                  return Card(
+                    elevation: 5,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: FittedBox(
+                          child: Text(data.amount.toString()),
+                        ),
+                      ),
+                      title: Text(data.title),
+                      subtitle: Text(
+                          DateFormat("dd/MM/yyyy HH:mm:ss").format(data.date)),
+                    ),
+                  );
+                });
+          }
+        }));
   }
 }
