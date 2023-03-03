@@ -2,7 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_8_1/model/transaction.dart';
 import 'package:flutter_application_8_1/providers/transaction_provider.dart';
+
 import 'package:provider/provider.dart';
+
+import '../main.dart';
 
 class FormScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
@@ -54,7 +57,9 @@ class FormScreen extends StatelessWidget {
                   var provider =
                       Provider.of<TransactionProvider>(context, listen: false);
                   provider.addTransaction(statemant);
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return MyHomePage(title: 'แอปรายจ่าย');
+                  }));
                 }
               },
               child: Text("บันทึก"),
